@@ -10,6 +10,7 @@ import MovieList from '../components/movieList';
 import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
 import { styles, theme } from '../theme';
 import Loading from '../components/loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ios = Platform.OS == 'ios';
 const topMargin = ios ? '' : ' mt-3';
@@ -21,16 +22,17 @@ export default function MovieScreen() {
     const [movie, setMovie] = useState({});
     const [cast, setCast] = useState([])
     const [similarMovies, setSimilarMovies] = useState([])
-    const [isFavourite, toggleFavourite] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
     const [loading, setLoading] = useState(false);
 
-
+    const [existingData, setExistingData] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         getMovieDetials(item.id);
         getMovieCredits(item.id);
         getSimilarMovies(item.id);
+        checkExistingItem();
     }, [item]);
 
     const getMovieDetials = async id => {
@@ -55,8 +57,56 @@ export default function MovieScreen() {
         if (data && data.results) {
             setSimilarMovies(data.results);
         }
-
     }
+
+    const checkExistingItem = async () => {
+        try {
+
+            // get existing data.
+            let getExistingData = await AsyncStorage.getItem('favoritelist');
+            getExistingData = getExistingData !== null ? JSON.parse(getExistingData) : [];
+            // check if current item exists or not.
+            const checkExistingItem = [...getExistingData].some(existingItem => existingItem.id === item.id)
+            setIsFavourite(checkExistingItem);
+            setExistingData(getExistingData);
+
+        } catch (error) {
+            console.log('checkExistingItem error => ', error);
+        }
+    }
+
+    const addNewItem = async () => {
+
+        try {
+
+            if (isFavourite) {
+
+                let tmp = [...existingData];
+                console.log(tmp.length)
+
+                tmp = tmp.filter(favoriteData => {
+                    return favoriteData?.id !== item?.id
+
+                });
+
+                await AsyncStorage.setItem('favoritelist', JSON.stringify(tmp));
+
+                setIsFavourite(false);
+
+                return;
+            }
+
+            const tmp = [...existingData, item];
+
+            await AsyncStorage.setItem('favoritelist', JSON.stringify(tmp));
+
+            setIsFavourite(true);
+
+        } catch (error) {
+            console.log('addNewItem error => ', error);
+        }
+    }
+
     return (
         <ScrollView
             contentContainerStyle={{ paddingBottom: 20 }}
@@ -69,7 +119,7 @@ export default function MovieScreen() {
                         <ChevronLeftIcon size="28" strokeWidth={2.5} color="white" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
+                    <TouchableOpacity onPress={addNewItem}>
                         <HeartIcon size="35" color={isFavourite ? theme.background : 'white'} />
                     </TouchableOpacity>
                 </SafeAreaView>
@@ -79,7 +129,6 @@ export default function MovieScreen() {
                     ) : (
                         <View>
                             <Image
-                                // source={require('../assets/images/moviePoster2.png')} 
                                 source={{ uri: image500(movie.poster_path) || fallbackMoviePoster }}
                                 style={{ width, height: height * 0.55 }}
                             />
@@ -92,8 +141,6 @@ export default function MovieScreen() {
                         </View>
                     )
                 }
-
-
 
             </View>
 
@@ -115,8 +162,6 @@ export default function MovieScreen() {
                         </Text>
                     ) : null
                 }
-
-
 
                 {/* genres  */}
                 <View style={localStyles.rowContainer}>
@@ -140,7 +185,6 @@ export default function MovieScreen() {
                 </Text>
 
             </View>
-
 
             {/* cast */}
             {
