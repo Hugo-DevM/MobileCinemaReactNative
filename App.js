@@ -1,4 +1,4 @@
-import AppNavigation from './navigation/appNavigation';
+import AppNavigation from './src/navigation/appNavigation';
 import "nativewind";
 
 export default function App() {

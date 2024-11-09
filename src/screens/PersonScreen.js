@@ -5,9 +5,11 @@ import { HeartIcon } from 'react-native-heroicons/solid'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MovieList from '../components/movieList';
-import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image185, image342, image500 } from '../api/moviedb';
+import { fetchPersonDetails, fetchPersonMovies } from '../domain/movieApi';
+import { fallbackPersonImage } from '../constants/constans'
+import { image342 } from '../helpers/imageHerlpers'
 import Loading from '../components/loading';
-import { styles } from '../theme';
+import { styles } from '../../theme';
 
 const ios = Platform.OS == 'ios';
 const verticalMargin = ios ? '' : ' my-3';

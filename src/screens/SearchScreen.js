@@ -3,7 +3,9 @@ import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { XMarkIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from '@react-navigation/native'
-import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb'
+import { searchMovies } from '../domain/searchApi'
+import { image185 } from '../helpers/imageHerlpers'
+import { fallbackMoviePoster } from '../constants/constans'
 import { debounce } from 'lodash'
 import Loading from '../components/loading'
 
@@ -98,7 +100,7 @@ export default function SearchScreen() {
                     ) : (
                         <View style={localStyles.emptyContainer}>
                             <Image
-                                source={require('../assets/images/movieTime.png')}
+                                source={require('../../assets/images/movieTime.png')}
                                 style={localStyles.emptyImg}
                             />
                         </View>

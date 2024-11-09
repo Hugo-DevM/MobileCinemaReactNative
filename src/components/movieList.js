@@ -1,9 +1,9 @@
 import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-import { moviesData } from '../constants'
 import { useNavigation } from '@react-navigation/native';
-import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
-import { styles } from '../theme';
+import { image185 } from '../helpers/imageHerlpers'
+import { fallbackMoviePoster } from '../constants/constans'
+import { styles } from '../../theme';
 const { width, height } = Dimensions.get('window');
 
 export default function MovieList({ title, hideSeeAll, data }) {

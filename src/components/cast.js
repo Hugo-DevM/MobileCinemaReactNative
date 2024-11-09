@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native'
 import React from 'react'
-import { fallbackPersonImage, image185, image342 } from '../api/moviedb';
+import { image185 } from '../helpers/imageHerlpers'
+import { fallbackPersonImage } from '../constants/constans'
 var { width, height } = Dimensions.get('window');
 
 export default function Cast({ cast, navigation }) {

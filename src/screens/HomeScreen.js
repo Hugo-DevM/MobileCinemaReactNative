@@ -5,10 +5,10 @@ import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons
 import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
 import { StatusBar } from 'expo-status-bar';
-import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
+import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../domain/movieApi';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
-import { styles } from '../theme';
+import { styles } from '../../theme';
 
 const ios = Platform.OS === 'ios';
 

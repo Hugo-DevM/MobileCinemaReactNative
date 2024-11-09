@@ -7,8 +7,10 @@ import { HeartIcon } from 'react-native-heroicons/solid';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Cast from '../components/cast';
 import MovieList from '../components/movieList';
-import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
-import { styles, theme } from '../theme';
+import { fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies} from '../domain/movieApi';
+import { image500 } from '../helpers/imageHerlpers'
+import { fallbackMoviePoster } from '../constants/constans'
+import { styles, theme } from '../../theme';
 import Loading from '../components/loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

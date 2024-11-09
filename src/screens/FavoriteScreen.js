@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList, Image } from 'react-native'
-import { fallbackMoviePoster, image500 } from '../api/moviedb';
+import { fallbackMoviePoster } from '../constants/constans'
+import { image500 } from '../helpers/imageHerlpers'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
