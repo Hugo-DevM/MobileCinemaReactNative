@@ -66,9 +66,11 @@ export default function MovieScreen() {
 
             // get existing data.
             let getExistingData = await AsyncStorage.getItem('favoritelist');
-            getExistingData = getExistingData !== null ? JSON.parse(getExistingData) : [];
+            getExistingData = getExistingData !== null ? 
+                JSON.parse(getExistingData) : [];
             // check if current item exists or not.
-            const checkExistingItem = [...getExistingData].some(existingItem => existingItem.id === item.id)
+            const checkExistingItem = [...getExistingData].
+            some(existingItem => existingItem.id === item.id)
             setIsFavourite(checkExistingItem);
             setExistingData(getExistingData);
 
@@ -80,30 +82,20 @@ export default function MovieScreen() {
     const addNewItem = async () => {
 
         try {
-
             if (isFavourite) {
-
                 let tmp = [...existingData];
                 console.log(tmp.length)
 
                 tmp = tmp.filter(favoriteData => {
                     return favoriteData?.id !== item?.id
-
                 });
-
                 await AsyncStorage.setItem('favoritelist', JSON.stringify(tmp));
-
                 setIsFavourite(false);
-
                 return;
             }
-
             const tmp = [...existingData, item];
-
             await AsyncStorage.setItem('favoritelist', JSON.stringify(tmp));
-
             setIsFavourite(true);
-
         } catch (error) {
             console.log('addNewItem error => ', error);
         }
